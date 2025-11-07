@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-function main() {
+async function main() {
   console.log("Hello world");
 
   const endpoint = process.env.AZURE_OPENAI_ENDPOINT!;
@@ -21,6 +21,17 @@ function main() {
     deployment,
   });
 
+  const messages: Array<{
+    role: "system" | "user" | "assistant";
+    content: string;
+  }> = [
+    {
+      role: "system",
+      content:
+        "You are a helpful assistant that only responds in one-line poetry.",
+    },
+  ];
+
   const readlineClient = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -30,7 +41,21 @@ function main() {
   readlineClient.prompt();
 
   readlineClient.on("line", async (userMessage) => {
-    console.log("Received:", userMessage);
+    messages.push({ role: "user", content: userMessage });
+
+    const openaiResponse = await openaiClient.chat.completions.create({
+      model: deployment,
+      messages: messages,
+      max_completion_tokens: 1000,
+    });
+
+    const botResponse =
+      openaiResponse.choices[0]?.message?.content || "No response";
+
+    messages.push({ role: "assistant", content: botResponse });
+
+    console.log("Bot:", botResponse);
+
     readlineClient.prompt();
   });
 

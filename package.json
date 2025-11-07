@@ -1,0 +1,17 @@
+{
+  "name": "openai-nodejs-chat-demo",
+  "version": "1.0.0",
+  "description": "openai-nodejs-chat-demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx index.ts"
+  },
+  "keywords": [],
+  "author": "Clyde D'Souza",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

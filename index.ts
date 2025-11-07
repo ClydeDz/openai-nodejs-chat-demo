@@ -1,5 +1,8 @@
 import { AzureOpenAI } from "openai";
 import * as readline from "readline";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 function main() {
   console.log("Hello world");
@@ -8,6 +11,8 @@ function main() {
   const apiKey = process.env.AZURE_OPENAI_API_KEY!;
   const apiVersion = process.env.AZURE_OPENAI_API_VERSION;
   const deployment = process.env.AZURE_OPENAI_DEPLOYMENT_NAME!;
+
+  console.log(endpoint);
 
   const openaiClient = new AzureOpenAI({
     endpoint,

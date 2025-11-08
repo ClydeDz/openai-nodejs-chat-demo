@@ -41,6 +41,8 @@ async function main() {
   readlineClient.prompt();
 
   readlineClient.on("line", async (userMessage) => {
+    process.stdout.write("Bot is thinking...");
+
     messages.push({ role: "user", content: userMessage });
 
     const openaiResponse = await openaiClient.chat.completions.create({
@@ -53,6 +55,9 @@ async function main() {
       openaiResponse.choices[0]?.message?.content || "No response";
 
     messages.push({ role: "assistant", content: botResponse });
+
+    readline.clearLine(process.stdout, 0);
+    readline.cursorTo(process.stdout, 0);
 
     console.log("Bot:", botResponse);
 
